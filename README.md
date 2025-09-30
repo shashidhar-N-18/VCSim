@@ -34,30 +34,8 @@ VCSim is a CLI-based version control system that provides core functionality sim
 
 ### High-Level Architecture Diagram
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        User Interface                        │
-│                      (CLI Command Parser)                    │
-└────────────────────────────┬────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────┐
-│                      VCS Controller                          │
-│              (Command Processing & Orchestration)            │
-└──────┬──────────────────────┬──────────────────────┬────────┘
-       │                      │                      │
-       ▼                      ▼                      ▼
-┌──────────────┐    ┌──────────────────┐    ┌────────────────┐
-│ Working Files│    │    Repository    │    │  File System   │
-│  Management  │◄───│   (Singleton)    │───►│  (.vcs/ dir)   │
-└──────────────┘    └──────────────────┘    └────────────────┘
-       │                      │
-       ▼                      ▼
-┌──────────────┐    ┌──────────────────┐
-│ File Objects │    │  Commit History  │
-│ (Polymorphic)│    │   (Snapshots)    │
-└──────────────┘    └──────────────────┘
-```
+<img width="3840" height="3603" alt="VCSim_Flow Archi" src="https://github.com/user-attachments/assets/e9a46cfb-a7a0-45e6-982b-39b448bb5e19" />
+
 
 ### Class Hierarchy
 
