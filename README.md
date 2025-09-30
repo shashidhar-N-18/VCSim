@@ -99,7 +99,8 @@ graph LR
 ```
 
 ### State Management Flow
-<img width="3840" height="617" alt="statesofFilesVCSim" src="https://github.com/user-attachments/assets/ae924010-dd24-4bae-852c-a87ab3f9c32f" />
+<img width="1001" height="397" alt="image" src="https://github.com/user-attachments/assets/59c773a3-8fdf-470c-b7c3-46551ad5bf9c" />
+
 
 
 
