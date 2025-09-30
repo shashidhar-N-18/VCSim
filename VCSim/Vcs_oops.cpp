@@ -11,13 +11,12 @@
 namespace fs = std::filesystem;
 using namespace std;
 
-// --------------------- File Classes ---------------------
 class File {
 protected:
     string name;
     string content;
-    string stagedContent; // holds edited content before commit
-    bool modified;        // track if file has been edited
+    string stagedContent;
+    bool modified;
 public:
     File(const string& n, const string& c = "") 
         : name(n), content(c), stagedContent(c), modified(false) {}
@@ -32,19 +31,19 @@ public:
         modified = true;   
     }
 
-    string getContent() const { return content; } // Original file content
-    string getStagedContent() const { return stagedContent; } // Edited version
+    string getContent() const { return content; }
+    string getStagedContent() const { return stagedContent; }
     string getName() const { return name; }
 
     bool isModified() const { return modified; }
     void clearModified() { 
         modified = false; 
-        content = stagedContent; // commit the staged content
+        content = stagedContent;
     }
 
     virtual void saveToDisk() const {
         ofstream out(name);
-        out << content;  // Only original content saved
+        out << content;
         out.close();
     }
 
@@ -55,7 +54,7 @@ class TextFile : public File {
 public:
     TextFile(const string& n, const string& c = "") : File(n, c) {}
     void showContent() const override {
-        cout << "[TextFile] " << name << ": " << stagedContent << endl; // show staged/edited content
+        cout << "[TextFile] " << name << ": " << stagedContent << endl;
     }
     File* clone() const override { return new TextFile(*this); }
 };
@@ -69,7 +68,6 @@ File* File::loadFromDisk(const string& fname) {
     return new TextFile(fname, content);
 }
 
-// --------------------- Commit Class ---------------------
 class Commit {
     int id;
     string message;
@@ -98,7 +96,6 @@ public:
     int getId() const { return id; }
 };
 
-// --------------------- Repository (Singleton) ---------------------
 class Repository {
     vector<unique_ptr<Commit>> commits;
     vector<File*> stagedFiles;
@@ -123,8 +120,6 @@ public:
 
     void commit(const string& msg) {
         vector<File*> editableFiles;
-
-        // Only commit files that are modified
         for (File* f : stagedFiles) {
             if (f->isModified()) editableFiles.push_back(f);
         }
@@ -143,7 +138,6 @@ public:
             out << f->getStagedContent();
             out.close();
 
-            // Update original file content after commit
             f->clearModified();
             f->saveToDisk();
         }
@@ -193,7 +187,6 @@ public:
     friend class VCS;
 };
 
-// --------------------- VCS Controller ---------------------
 class VCS {
     vector<File*> workingFiles;
     Repository& repo;
@@ -268,7 +261,6 @@ public:
     ~VCS() { repo.cleanup(); }
 };
 
-// --------------------- Main ---------------------
 int main() {
     VCS vcs;
     string cmd;
